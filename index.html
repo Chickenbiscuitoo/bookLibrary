@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="style.css">
+    <script src="code.js" defer></script>
+
+    <title>bookLibrary</title>
+</head>
+<body>
+    <div class="container" id="container">
+        <div class="divLibrary" id="divLibrary">
+
+        </div>
+        <div class="newBookBtn">
+            <button id="newBookBtn" onclick="showForm()">
+                NEW BOOK
+            </button>
+
+            <form id="form">
+                <fieldset>
+                    <legend>ABOUT YOUR BOOK</legend>
+                    <ol>
+                        <li><input id="inputAuthor" placeholder="Author"></li>
+                        <li><input id="inputTitle" placeholder="Title"></li>
+                        <li><input id="inputPages" placeholder="Pages"></li>
+                        <li><input id="inputRead" placeholder="Read"></li>
+                    </ol>
+                    <button class="btnSubmit" id="btnSubmit">Submit</button>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
