@@ -13,6 +13,7 @@ body, html {
     display: flex;
     flex-direction: column;
     height: 100%;
+    margin-top: 50px;
     margin-left: 150px;
     margin-right: 150px;
     background-color: white;
@@ -21,10 +22,12 @@ body, html {
 .header {
     flex: 25;
     text-align: center;
+    background-color: #99e;
 }
 
 .header h1 {
-    font-size: 80px
+    font-size: 80px;
+    color: white;
 }
 
 .form-container {
@@ -48,6 +51,7 @@ body, html {
     padding: 12px 20px;
     margin: 8px 0;
     box-sizing: border-box;
+    font-size: 25px;
 }
 
 .form-group label {
@@ -70,10 +74,14 @@ body, html {
     margin: 8px 0;
     box-sizing: border-box;
     background-color: white;
+    font-size: 25px;
+    font-weight: 600;
+    color: #99e;
 }
 
 .submit-btn:hover {
     background-color: #d3d3d3;
+    color: rgb(109, 109, 236);
     cursor: pointer;
 }
 
@@ -96,14 +104,42 @@ body, html {
     padding: 8px;
 }
 
-.library-bookshelf {
-    display: flex;
+.lib-header-x {
+    width: min-content;
+    color: #99e;
 }
 
-.bookshelf-element {
-    width: 100%;
-    text-align: left;
+.library-bookshelf {
+    display: flex;
+    flex-direction: column;
+}
+
+.library-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border-bottom: 3px solid #99e;
-    padding: 8px;
-    font-size: 20px;
+}
+
+.row-element {
+    width: 100%;
+}
+   
+
+#delete-btn-div {
+    width: min-content;
+}
+
+#delete-btn-div button {
+    background-color: white;
+    border: solid 1px #99e;
+    color: #99e;
+    font-weight: 800;
+}
+
+#delete-btn-div button:hover {
+    background-color: #d3d3d3;
+    color: rgb(109, 109, 236);
+    cursor: pointer;
+    border: solid 1px rgb(109, 109, 236);
 }

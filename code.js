@@ -10,24 +10,7 @@ class Book {
 // UI CLASS
 class UI {
     static displayBooks() {
-        const storedBooks = [
-            {
-                title: 'Harry Potter',
-                author: 'J. K Rowling',
-                pages: '896'
-            },
-            {
-                title: 'Fight Club',
-                author: 'John Van Dude',
-                pages: '658'
-            },
-            {
-                title: 'Berserk',
-                author: 'Kentaro Miura',
-                pages: '1503'
-            }
-        ]
-        const books = storedBooks;
+        const books = Store.getBooks();
 
         books.forEach((book) => {
             UI.addBookToList(book);
@@ -35,32 +18,120 @@ class UI {
     }
 
     static addBookToList(book) {
-        const bookListTitle = document.getElementById('title');
-        const bookListAuthor = document.getElementById('author');
-        const bookListPages = document.getElementById('pages');
+        const libraryBookshelf = document.getElementById('library-bookshelf');
+        
+        const row = document.createElement('div');
+        row.className = 'library-row';
+        row.id = 'library-row';
 
-        const bookTitle = document.createElement('p');
-        const bookAuthor = document.createElement('p');
-        const bookPages = document.createElement('p');
+        const rowTitleDiv = document.createElement('div');
+        const rowAuthorDiv = document.createElement('div');
+        const rowPagesDiv = document.createElement('div');
+        const rowDeleteBtnDiv = document.createElement('div');
 
-        bookTitle.textContent = `${book.title}`;
-        bookAuthor.textContent = `${book.author}`;
-        bookPages.textContent = `${book.pages}`;
+        rowTitleDiv.id = 'title';
+        rowAuthorDiv.id = 'author';
+        rowPagesDiv.id = 'pages';
+        rowDeleteBtnDiv.id = 'delete-btn-div'
 
-        bookListTitle.appendChild(bookTitle);
-        bookListAuthor.appendChild(bookAuthor);
-        bookListPages.appendChild(bookPages);
+        rowTitleDiv.className = 'row-element';
+        rowAuthorDiv.className = 'row-element';
+        rowPagesDiv.className = 'row-element';
+        rowDeleteBtnDiv.className = 'row-element'
+
+        rowTitleDiv.innerHTML = `<p>${book.title}</p>`;
+        rowAuthorDiv.innerHTML = `<p>${book.author}</p>`;
+        rowPagesDiv.innerHTML = `<p>${book.pages}</p>`;
+        rowDeleteBtnDiv.innerHTML = '<button class="delete-btn" >X</button>';
+
+        row.appendChild(rowTitleDiv);
+        row.appendChild(rowAuthorDiv);
+        row.appendChild(rowPagesDiv);
+        row.appendChild(rowDeleteBtnDiv);
+
+        libraryBookshelf.appendChild(row);
+    }
+
+    static clearForm() {
+        document.getElementById('input-title').value = '';
+        document.getElementById('input-author').value = '';
+        document.getElementById('input-pages').value = '';
+    }
+
+    static deleteBook(target) {
+        if (target.classList.contains('delete-btn')) {
+            target.parentElement.parentElement.remove();
+        }
     }
 }
 
 // STORE CLASS
+class Store {
+    static getBooks() {
+        let books;
+        if (localStorage.getItem('books') === null) {
+            books = [];
+        } else {
+            books = JSON.parse(localStorage.getItem('books'));
+        }
+
+        return books;
+    }
+
+    static addBook(book) {
+        const books = Store.getBooks();
+        books.push(book);
+
+        localStorage.setItem('books', JSON.stringify(books));
+    }
+
+    static removeBook(title) {
+        const books = Store.getBooks();
+
+        books.forEach((book, index) => {
+            if (book.title === title) {
+                books.splice(index, 1);
+            }
+        })
+
+        localStorage.setItem('books', JSON.stringify(books));
+    }
+}
 
 // EVENT: DISPLAY BOOKS
-const btnSubmit = document.getElementById('submit-form-btn')
-btnSubmit.addEventListener('click', () => {
-    console.log('ey')
-})
+document.addEventListener('DOMContentLoaded', UI.displayBooks());
 
 // EVENT: ADD A BOOK
+const btnSubmit = document.getElementById('submit-form-btn')
+btnSubmit.addEventListener('click', (e) => {
+    // GET FORM VALUES
+    if (
+        !document.getElementById('input-title').value == '' && 
+        !document.getElementById('input-author').value == '' &&
+        !document.getElementById('input-pages').value == ''
+    ) {
+        title = document.getElementById('input-title').value;
+        author = document.getElementById('input-author').value;
+        pages = document.getElementById('input-pages').value;
+        
+        // CREATE BOOK
+        const book = new Book(title, author, pages);
+
+        // ADD TO LIST
+        UI.addBookToList(book);
+
+        // ADD BOOK TO STORAGE
+        Store.addBook(book);
+
+        // CLEAR FORM
+        UI.clearForm();
+
+        e.preventDefault();
+    }
+})
 
 // EVENT: REMOVE A BOOK
+document.getElementById('library-bookshelf').addEventListener('click', (e) => {
+    UI.deleteBook(e.target);
+    Store.removeBook(e.target.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.textContent);
+})
