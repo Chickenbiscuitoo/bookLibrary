@@ -1,4 +1,3 @@
-// BOOK CLASS
 class Book {
     constructor(title, author, pages) {
         this.title = title,
@@ -7,7 +6,6 @@ class Book {
     }
 }
 
-// UI CLASS
 class UI {
     static displayBooks() {
         const books = Store.getBooks();
@@ -65,7 +63,6 @@ class UI {
     }
 }
 
-// STORE CLASS
 class Store {
     static getBooks() {
         let books;
@@ -104,7 +101,6 @@ document.addEventListener('DOMContentLoaded', UI.displayBooks());
 // EVENT: ADD A BOOK
 const btnSubmit = document.getElementById('submit-form-btn')
 btnSubmit.addEventListener('click', (e) => {
-    // GET FORM VALUES
     if (
         !document.getElementById('input-title').value == '' && 
         !document.getElementById('input-author').value == '' &&
@@ -114,16 +110,12 @@ btnSubmit.addEventListener('click', (e) => {
         author = document.getElementById('input-author').value;
         pages = document.getElementById('input-pages').value;
         
-        // CREATE BOOK
         const book = new Book(title, author, pages);
 
-        // ADD TO LIST
         UI.addBookToList(book);
 
-        // ADD BOOK TO STORAGE
         Store.addBook(book);
 
-        // CLEAR FORM
         UI.clearForm();
 
         e.preventDefault();
