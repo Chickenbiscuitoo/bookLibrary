@@ -143,3 +143,24 @@ body, html {
     cursor: pointer;
     border: solid 1px rgb(109, 109, 236);
 }
+
+footer {
+    width: 100%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    background-color: #99e;
+    color: white;
+    position: fixed;
+    bottom: 0;
+}
+
+#img-github {
+    width: 30px;
+    transition: transform 0.3s ease-in-out;
+}
+
+#img-github:hover {
+    transform: rotate(360deg) scale(1.2);
+}
